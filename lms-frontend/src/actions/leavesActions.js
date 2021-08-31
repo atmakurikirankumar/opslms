@@ -28,7 +28,6 @@ import {
   GET_ALL_TEAM_LEAVES_GROUP_BY_MONTH_FAIL,
 } from "../constants/leavesConstants";
 import axios from "axios";
-import { BASE_API } from "../constants/apiConstants";
 
 //get leaves
 export const getLeaves = () => async (dispatch) => {
@@ -46,7 +45,7 @@ export const getLeaves = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/leaves`, config);
+    const { data } = await axios.get(`/api/leaves`, config);
 
     dispatch({
       type: GET_LEAVES_SUCCESS,
@@ -81,7 +80,7 @@ export const getLeaveById = (id) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/leaves/${id}`, config);
+    const { data } = await axios.get(`/api/leaves/${id}`, config);
 
     dispatch({
       type: GET_LEAVE_BY_ID_SUCCESS,
@@ -116,7 +115,7 @@ export const removeLeaveById = (id) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.delete(`${BASE_API}/api/leaves/${id}`, config);
+    const { data } = await axios.delete(`/api/leaves/${id}`, config);
 
     dispatch({
       type: REMOVE_LEAVE_BY_ID_SUCCESS,
@@ -153,11 +152,7 @@ export const submitLeave = (startdate, enddate, comments) => async (dispatch) =>
       },
     };
 
-    const { data } = await axios.post(
-      `${BASE_API}/api/leaves`,
-      { startdate, enddate, comments },
-      config
-    );
+    const { data } = await axios.post(`/api/leaves`, { startdate, enddate, comments }, config);
 
     dispatch({
       type: SUBMIT_LEAVE_SUCCESS,
@@ -194,11 +189,7 @@ export const updateLeaveById = (id, startdate, enddate, comments) => async (disp
       },
     };
 
-    const { data } = await axios.put(
-      `${BASE_API}/api/leaves/${id}`,
-      { startdate, enddate, comments },
-      config
-    );
+    const { data } = await axios.put(`/api/leaves/${id}`, { startdate, enddate, comments }, config);
 
     dispatch({
       type: UPDATE_LEAVE_BY_ID_SUCCESS,
@@ -236,7 +227,7 @@ export const getTeamLeaves = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/leaves/${userId}/team`, config);
+    const { data } = await axios.get(`/api/leaves/${userId}/team`, config);
 
     dispatch({
       type: GET_TEAM_LEAVES_SUCCESS,
@@ -271,7 +262,7 @@ export const getTeamLeavesGroupByMonth = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/leaves/team/groupbymonth`, config);
+    const { data } = await axios.get(`/api/leaves/team/groupbymonth`, config);
 
     dispatch({
       type: GET_TEAM_LEAVES_GROUP_BY_MONTH_SUCCESS,
@@ -306,7 +297,7 @@ export const getAllTeamLeaves = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/leaves/all`, config);
+    const { data } = await axios.get(`/api/leaves/all`, config);
 
     dispatch({
       type: GET_ALL_TEAM_LEAVES_SUCCESS,
@@ -341,7 +332,7 @@ export const getAllTeamLeavesGroupByMonth = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/leaves/all/groupbymonth`, config);
+    const { data } = await axios.get(`/api/leaves/all/groupbymonth`, config);
 
     dispatch({
       type: GET_ALL_TEAM_LEAVES_GROUP_BY_MONTH_SUCCESS,

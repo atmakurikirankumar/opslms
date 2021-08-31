@@ -28,7 +28,6 @@ import {
   UPDATE_USER_BY_ID_SUCCESS,
   UPDATE_USER_BY_ID_FAIL,
 } from "../constants/userConstants";
-import { BASE_API } from "../constants/apiConstants";
 import axios from "axios";
 
 // Signin
@@ -45,11 +44,7 @@ export const login = (username, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      `${BASE_API}/api/auth/signin`,
-      { username, password },
-      config
-    );
+    const { data } = await axios.post(`/api/auth/signin`, { username, password }, config);
 
     dispatch({
       type: USER_LOGIN_SUCCESS,
@@ -82,11 +77,7 @@ export const resetPassword = (username, password) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(
-      `${BASE_API}/api/auth/reset-password`,
-      { username, password },
-      config
-    );
+    const { data } = await axios.post(`/api/auth/reset-password`, { username, password }, config);
 
     dispatch({
       type: USER_RESET_PASSWORD_SUCCESS,
@@ -128,7 +119,7 @@ export const register = (firstname, lastname, username, password, team) => async
     };
 
     const { data } = await axios.post(
-      `${BASE_API}/api/auth/signup`,
+      `/api/auth/signup`,
       { firstname, lastname, username, password, team },
       config
     );
@@ -170,7 +161,7 @@ export const getUserProfile = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/auth/profile`, config);
+    const { data } = await axios.get(`/api/auth/profile`, config);
 
     dispatch({
       type: GET_USER_PROFILE_SUCCESS,
@@ -203,7 +194,7 @@ export const getAllUsers = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/users/all`, config);
+    const { data } = await axios.get(`/api/users/all`, config);
 
     dispatch({
       type: GET_ALL_USERS_SUCCESS,
@@ -236,7 +227,7 @@ export const getUserCountByTeam = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/users/teamsize`, config);
+    const { data } = await axios.get(`/api/users/teamsize`, config);
 
     dispatch({
       type: GET_USER_COUNT_BY_TEAM_SUCCESS,
@@ -269,7 +260,7 @@ export const getUserCountByRole = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/users/rolesize`, config);
+    const { data } = await axios.get(`/api/users/rolesize`, config);
 
     dispatch({
       type: GET_USER_COUNT_BY_ROLE_SUCCESS,
@@ -301,7 +292,7 @@ export const deleteUserById = (id) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.delete(`${BASE_API}/api/users/${id}`, config);
+    const { data } = await axios.delete(`/api/users/${id}`, config);
 
     dispatch({
       type: DELETE_USER_BY_ID_SUCCESS,
@@ -337,7 +328,7 @@ export const updateUserById = (id, firstname, lastname, teamname, isAdmin) => as
     };
 
     const { data } = await axios.put(
-      `${BASE_API}/api/users/${id}`,
+      `/api/users/${id}`,
       { firstname, lastname, teamname, isAdmin },
       config
     );

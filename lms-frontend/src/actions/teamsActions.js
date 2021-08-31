@@ -16,7 +16,6 @@ import {
   UPDATE_TEAM_BY_ID_FAIL,
 } from "../constants/teamsConstants";
 import axios from "axios";
-import { BASE_API } from "../constants/apiConstants";
 
 //get teams
 export const getTeamsList = () => async (dispatch) => {
@@ -31,7 +30,7 @@ export const getTeamsList = () => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/teams`, config);
+    const { data } = await axios.get(`/api/teams`, config);
 
     dispatch({
       type: GET_TEAMS_SUCCESS,
@@ -65,7 +64,7 @@ export const addTeam = (teamname) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.post(`${BASE_API}/api/teams`, { teamname }, config);
+    const { data } = await axios.post(`/api/teams`, { teamname }, config);
 
     dispatch({
       type: ADD_TEAM_SUCCESS,
@@ -101,7 +100,7 @@ export const deleteTeamById = (id) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.delete(`${BASE_API}/api/teams/${id}`, config);
+    const { data } = await axios.delete(`/api/teams/${id}`, config);
 
     dispatch({
       type: DELETE_TEAM_BY_ID_SUCCESS,
@@ -137,7 +136,7 @@ export const getTeamById = (id) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.get(`${BASE_API}/api/teams/${id}`, config);
+    const { data } = await axios.get(`/api/teams/${id}`, config);
 
     dispatch({
       type: GET_TEAM_BY_ID_SUCCESS,
@@ -171,7 +170,7 @@ export const updateTeamById = (id, name) => async (dispatch) => {
       },
     };
 
-    const { data } = await axios.put(`${BASE_API}/api/teams/${id}`, { name }, config);
+    const { data } = await axios.put(`/api/teams/${id}`, { name }, config);
 
     dispatch({
       type: UPDATE_TEAM_BY_ID_SUCCESS,
