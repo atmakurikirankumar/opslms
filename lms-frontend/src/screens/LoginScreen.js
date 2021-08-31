@@ -11,6 +11,8 @@ const LoginScreen = ({ location, history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
 
+  const [passwordUpdateMessage, setPasswordUpdateMessage] = useState("");
+
   const dispatch = useDispatch();
 
   const userLogin = useSelector((state) => state.userLogin);
@@ -22,7 +24,10 @@ const LoginScreen = ({ location, history }) => {
     if (userInfo) {
       history.push(redirect);
     }
-  }, [history, userInfo, redirect]);
+    if (location && location.state && location.state.passwordUpdated) {
+      setPasswordUpdateMessage("Password changed successfully. Please sign-in back.");
+    }
+  }, [location, userInfo, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -34,6 +39,7 @@ const LoginScreen = ({ location, history }) => {
       <Row>
         <Col md={9}>
           <h1>Sign In</h1>
+          {passwordUpdateMessage && <Message variant="success">{passwordUpdateMessage}</Message>}
           {error && <Message variant="warning">{error}</Message>}
           {loading && <Loader />}
           <Form onSubmit={submitHandler}>

@@ -1,25 +1,21 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { Form, Button, ButtonGroup, Row, Col } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import Message from "../components/Message";
 import Loader from "../components/Loader";
 import FormContainer from "../components/FormContainer";
 import { resetPassword } from "../actions/userActions";
+import { USER_LOGOUT } from "../constants/userConstants";
 
-const ResetPassword = ({ location }) => {
+const ResetPassword = ({ history }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmpassword, setConfirmpassword] = useState("");
   const [message, setMessage] = useState("");
-  const [passwordResetMessage, setPasswordResetMessage] = useState("");
 
   const dispatch = useDispatch();
 
-  const passwordReset = useSelector((state) => state.passwordReset);
-  const { loading, error, passwordResetResponse } = passwordReset;
-
-  const redirect = location.search ? location.search.split("=")[1] : "/";
+  const { loading, error, passwordUpdate } = useSelector((state) => state.passwordResetReducer);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -31,14 +27,19 @@ const ResetPassword = ({ location }) => {
       setPassword("");
       setConfirmpassword("");
       dispatch(resetPassword(username, password));
-      passwordResetResponse && setPasswordResetMessage(passwordResetResponse.message);
     }
   };
+
+  useEffect(() => {
+    if (passwordUpdate) {
+      dispatch({ type: USER_LOGOUT });
+      history.push({ pathname: "/login", state: { passwordUpdated: true } });
+    }
+  }, [dispatch, history, passwordUpdate]);
 
   return (
     <FormContainer>
       <h1>Reset Password</h1>
-      {passwordResetMessage && <Message variant="success">{passwordResetMessage}</Message>}
       {message && <Message variant="warning">{message}</Message>}
       {error && <Message variant="warning">{error}</Message>}
       {loading && <Loader />}
@@ -82,16 +83,6 @@ const ResetPassword = ({ location }) => {
               <Button type="submit" variant="primary" className="mt-3">
                 Reset Password
               </Button>
-              {passwordResetMessage && (
-                <Button type="button" className="mt-3 btn-danger">
-                  <Link
-                    style={{ textDecoration: "none", color: "white" }}
-                    to={redirect ? `/login?redirect=${redirect}` : "/login"}
-                  >
-                    Go Back To Login
-                  </Link>
-                </Button>
-              )}
             </ButtonGroup>
           </Form>
         </Col>

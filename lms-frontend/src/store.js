@@ -4,7 +4,7 @@ import { composeWithDevTools } from "redux-devtools-extension";
 import {
   userLoginReducer,
   userRegisterReducer,
-  userResetPasswordReducer,
+  passwordResetReducer,
   getUserProfileReducer,
   getAllUsersReducer,
   getUserCountByRoleReducer,
@@ -35,7 +35,7 @@ import {
 const reducer = combineReducers({
   userLogin: userLoginReducer,
   userRegister: userRegisterReducer,
-  passwordReset: userResetPasswordReducer,
+  passwordResetReducer,
   getTeams: getTeamsReducer,
   leavesReducer: getLeavesReducer,
   submitLeaveReducer,
