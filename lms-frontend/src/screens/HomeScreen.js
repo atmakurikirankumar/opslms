@@ -102,6 +102,7 @@ const HomeScreen = ({ history }) => {
     {
       dataField: "_id",
       text: "Id",
+      hidden: true,
       formatter: (cellContent, row) => {
         return format(cellContent);
       },
@@ -158,6 +159,7 @@ const HomeScreen = ({ history }) => {
       formatter: (cellContent, row) => {
         return format(cellContent);
       },
+      hidden: true,
     },
     {
       dataField: "updatedAt",
@@ -197,6 +199,20 @@ const HomeScreen = ({ history }) => {
       },
     },
   ];
+
+  const CaptionElement = () => (
+    <h2
+      style={{
+        borderRadius: "0.5em",
+        textAlign: "center",
+        color: "purple",
+        border: "1px solid purple",
+        padding: "0.5em",
+      }}
+    >
+      Your Upcoming PTO
+    </h2>
+  );
 
   const getFileName = () => {
     const userid = userInfo && userInfo._id;
@@ -315,7 +331,6 @@ const HomeScreen = ({ history }) => {
       <hr />
 
       <Row>
-        <h2>Your Upcoming PTO</h2>
         {error && <Message variant="warning">{error}</Message>}
         {loading && <Loader />}
         {leaves && leaves.length === 0 && (
@@ -336,7 +351,7 @@ const HomeScreen = ({ history }) => {
                   {...props.baseProps}
                   bootstrap4
                   pagination={paginationFactory({ sizePerPage: 3 })}
-                  striped
+                  caption={<CaptionElement />}
                   hover
                   responsive
                 />

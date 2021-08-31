@@ -9,6 +9,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import { addTeam, getTeamsList, deleteTeamById, updateTeamById } from "../actions/teamsActions";
 import { useDispatch, useSelector } from "react-redux";
+import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 
 const ManageTeams = ({ history }) => {
   const dispatch = useDispatch();
@@ -49,6 +50,7 @@ const ManageTeams = ({ history }) => {
       text: "Team Name",
       csvText: "Team Name",
       sort: true,
+      filter: textFilter({ placeholder: "Enter Team Name" }),
     },
     {
       dataField: "Action",
@@ -89,6 +91,20 @@ const ManageTeams = ({ history }) => {
     dispatch(addTeam(teamname));
     setTeamname("");
   };
+
+  const CaptionElement = () => (
+    <h2
+      style={{
+        borderRadius: "0.5em",
+        textAlign: "center",
+        color: "purple",
+        border: "1px solid purple",
+        padding: "0.5em",
+      }}
+    >
+      Teams List
+    </h2>
+  );
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
@@ -198,7 +214,6 @@ const ManageTeams = ({ history }) => {
 
       <Row>
         <Col md={8}>
-          <h2>Teams List</h2>
           {getTeamsError && <Message variant="warning">{getTeamsError}</Message>}
           {getTeamsloading && <Loader />}
           {teams && teams.length === 0 && (
@@ -219,7 +234,9 @@ const ManageTeams = ({ history }) => {
                     {...props.baseProps}
                     bootstrap4
                     pagination={paginationFactory({ sizePerPage: 10 })}
-                    striped
+                    caption={<CaptionElement />}
+                    filter={filterFactory()}
+                    filterPosition={"top"}
                     hover
                     responsive
                   />

@@ -39,6 +39,6 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const PORT = process.env.PORT || 5000;
-const ENVIRONMENT = process.env.NODE_ENV || "DEV";
+const ENVIRONMENT = process.env.NODE_ENV || "development";
 
 app.listen(PORT, () => console.log(`Server running in ${ENVIRONMENT} mode on port ${PORT}`));

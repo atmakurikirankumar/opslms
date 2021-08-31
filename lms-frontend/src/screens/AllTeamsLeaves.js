@@ -2,6 +2,7 @@ import Message from "../components/Message";
 import Loader from "../components/Loader";
 import React, { useEffect } from "react";
 import { getAllTeamLeaves, getAllTeamLeavesGroupByMonth } from "../actions/leavesActions";
+import { getTeamsList } from "../actions/teamsActions";
 import { Row, Button } from "react-bootstrap";
 import "react-bootstrap-table-next/dist/react-bootstrap-table2.min.css";
 import "react-bootstrap-table2-paginator/dist/react-bootstrap-table2-paginator.min.css";
@@ -11,6 +12,7 @@ import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import { useDispatch, useSelector } from "react-redux";
 import moment from "moment";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 
 const AllTeamsLeaves = ({ history }) => {
   const dispatch = useDispatch();
@@ -22,6 +24,7 @@ const AllTeamsLeaves = ({ history }) => {
 
   useEffect(() => {
     if (userInfo && userInfo.isAdmin) {
+      dispatch(getTeamsList());
       dispatch(getAllTeamLeaves());
       dispatch(getAllTeamLeavesGroupByMonth());
     } else {
@@ -67,30 +70,35 @@ const AllTeamsLeaves = ({ history }) => {
         return format(cellContent);
       },
       csvText: "Leave Id",
+      hidden: true,
     },
     {
       dataField: "firstname",
       text: "First Name",
       sort: true,
       csvText: "First Name",
+      filter: textFilter({ placeholder: "FirstName" }),
     },
     {
       dataField: "lastname",
       text: "Last Name",
       sort: true,
       csvText: "Last Name",
+      filter: textFilter({ placeholder: "LastName" }),
     },
     {
       dataField: "username",
       text: "User Name",
       sort: true,
       csvText: "User Name",
+      filter: textFilter({ placeholder: "UserName" }),
     },
     {
       dataField: "team",
       text: "Team Name",
       sort: true,
       csvText: "Team Name",
+      filter: textFilter({ placeholder: "TeamName" }),
     },
     {
       dataField: "startdate",
@@ -156,10 +164,23 @@ const AllTeamsLeaves = ({ history }) => {
     },
   ];
 
+  const CaptionElement = () => (
+    <h2
+      style={{
+        borderRadius: "0.5em",
+        textAlign: "center",
+        color: "purple",
+        border: "1px solid purple",
+        padding: "0.5em",
+      }}
+    >
+      All Teams Upcoming PTO
+    </h2>
+  );
+
   return (
     <>
       <Row>
-        <h2>All Teams Upcoming PTO</h2>
         {error && <Message variant="warning">{error}</Message>}
         {loading && <Loader />}
         {leaves && leaves.length === 0 && <Message variant="success">No upcoming PTO yet</Message>}
@@ -178,9 +199,11 @@ const AllTeamsLeaves = ({ history }) => {
                   {...props.baseProps}
                   bootstrap4
                   pagination={paginationFactory({ sizePerPage: 5 })}
-                  striped
                   hover
                   responsive
+                  caption={<CaptionElement />}
+                  filter={filterFactory()}
+                  filterPosition={"top"}
                 />
                 <MyExportCSV {...props.csvProps} />
               </div>

@@ -27,7 +27,7 @@ const LoginScreen = ({ location, history }) => {
     if (location && location.state && location.state.passwordUpdated) {
       setPasswordUpdateMessage("Password changed successfully. Please sign-in back.");
     }
-  }, [location, userInfo, redirect]);
+  }, [location, history, userInfo, redirect]);
 
   const submitHandler = (e) => {
     e.preventDefault();

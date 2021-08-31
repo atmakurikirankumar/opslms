@@ -28,6 +28,7 @@ import {
   Area,
 } from "recharts";
 import { getTeamsList } from "../actions/teamsActions";
+import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 
 const UserListScreen = ({ history }) => {
   const dispatch = useDispatch();
@@ -73,11 +74,26 @@ const UserListScreen = ({ history }) => {
     return str.substring(0, 10);
   };
 
+  const CaptionElement = () => (
+    <h2
+      style={{
+        borderRadius: "0.5em",
+        textAlign: "center",
+        color: "purple",
+        border: "1px solid purple",
+        padding: "0.5em",
+      }}
+    >
+      Teams List
+    </h2>
+  );
+
   const columns = [
     {
       dataField: "id",
       text: "Id",
       csvText: "User Id",
+      hidden: true,
       formatter: (cellContent, row) => {
         return format(cellContent);
       },
@@ -87,30 +103,35 @@ const UserListScreen = ({ history }) => {
       text: "First Name",
       csvText: "First Name",
       sort: true,
+      filter: textFilter({ placeholder: "Enter First Name" }),
     },
     {
       dataField: "lastname",
       text: "Last Name",
       csvText: "Last Name",
       sort: true,
+      filter: textFilter({ placeholder: "Enter Last Name" }),
     },
     {
       dataField: "username",
       text: "User Name",
       csvText: "User Name",
       sort: true,
+      filter: textFilter({ placeholder: "Enter User Name" }),
     },
     {
       dataField: "team",
       text: "Team Name",
       csvText: "Team Name",
       sort: true,
+      filter: textFilter({ placeholder: "Enter Team Name" }),
     },
     {
       dataField: "role",
       text: "Role Name",
       csvText: "Role Name",
       sort: true,
+      filter: textFilter({ placeholder: "Enter Role Name" }),
     },
     {
       dataField: "isAdmin",
@@ -273,7 +294,6 @@ const UserListScreen = ({ history }) => {
         </Modal.Footer>
       </Modal>
       <Row>
-        <h2>Users List</h2>
         <Row>
           <Col sm={5}>
             {error && <Message variant="warning">{error}</Message>}
@@ -302,7 +322,9 @@ const UserListScreen = ({ history }) => {
                   {...props.baseProps}
                   bootstrap4
                   pagination={paginationFactory({ sizePerPage: 5 })}
-                  striped
+                  caption={<CaptionElement />}
+                  filter={filterFactory()}
+                  filterPosition={"top"}
                   hover
                   responsive
                 />

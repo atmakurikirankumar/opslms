@@ -12,6 +12,7 @@ import paginationFactory from "react-bootstrap-table2-paginator";
 import moment from "moment";
 import ToolkitProvider from "react-bootstrap-table2-toolkit";
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend } from "recharts";
+import filterFactory, { textFilter } from "react-bootstrap-table2-filter";
 
 const TeamAbsence = ({ history }) => {
   const dispatch = useDispatch();
@@ -68,6 +69,7 @@ const TeamAbsence = ({ history }) => {
     {
       dataField: "_id",
       text: "Leave Id",
+      hidden: true,
       formatter: (cellContent, row) => {
         return format(cellContent);
       },
@@ -78,18 +80,21 @@ const TeamAbsence = ({ history }) => {
       text: "First Name",
       sort: true,
       csvText: "First Name",
+      filter: textFilter({ placeholder: "Enter First Name" }),
     },
     {
       dataField: "user.lastname",
       text: "Last Name",
       sort: true,
       csvText: "Last Name",
+      filter: textFilter({ placeholder: "Enter Last Name" }),
     },
     {
       dataField: "user.username",
       text: "User Name",
       sort: true,
       csvText: "User Name",
+      filter: textFilter({ placeholder: "Enter User Name" }),
     },
     {
       dataField: "startdate",
@@ -155,10 +160,23 @@ const TeamAbsence = ({ history }) => {
     },
   ];
 
+  const CaptionElement = () => (
+    <h2
+      style={{
+        borderRadius: "0.5em",
+        textAlign: "center",
+        color: "purple",
+        border: "1px solid purple",
+        padding: "0.5em",
+      }}
+    >
+      Team Upcoming PTO
+    </h2>
+  );
+
   return (
     <>
       <Row>
-        {team && team.name && <h2>{`${team.name} Team Upcoming PTO`}</h2>}
         {error && <Message variant="warning">{error}</Message>}
         {loading && <Loader />}
         {leaves && leaves.length === 0 && (
@@ -178,8 +196,10 @@ const TeamAbsence = ({ history }) => {
                 <BootstrapTable
                   {...props.baseProps}
                   bootstrap4
+                  caption={<CaptionElement />}
                   pagination={paginationFactory({ sizePerPage: 5 })}
-                  striped
+                  filter={filterFactory()}
+                  filterPosition={"top"}
                   hover
                   responsive
                 />

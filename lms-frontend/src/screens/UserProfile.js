@@ -28,7 +28,7 @@ const UserProfile = ({ history }) => {
           {userProfile && (
             <>
               <h2>User Profile</h2>
-              <Table striped hover responsive bordered size="sm">
+              <Table hover responsive bordered size="sm">
                 <thead>
                   <tr>
                     <th>#</th>
