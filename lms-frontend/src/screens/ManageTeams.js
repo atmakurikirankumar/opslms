@@ -148,18 +148,14 @@ const ManageTeams = ({ history }) => {
           <Modal.Title>Change your team name</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form.Group as={Row} className="mb-3" controlId="teamname1">
-            <Form.Label column sm={4}>
-              <strong>Team Name:</strong>
-            </Form.Label>
-            <Col sm={8}>
-              <Form.Control
-                type="text"
-                value={teamname1}
-                onChange={(e) => setTeamname1(e.target.value)}
-                required
-              ></Form.Control>
-            </Col>
+          <Form.Group className="mb-3" controlId="teamname1">
+            <Form.Label>Team Name</Form.Label>
+            <Form.Control
+              type="text"
+              value={teamname1}
+              onChange={(e) => setTeamname1(e.target.value)}
+              required
+            ></Form.Control>
           </Form.Group>
         </Modal.Body>
         <Modal.Footer>

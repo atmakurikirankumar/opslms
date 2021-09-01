@@ -84,7 +84,7 @@ const UserListScreen = ({ history }) => {
         padding: "0.5em",
       }}
     >
-      Teams List
+      Users List
     </h2>
   );
 
